@@ -22,22 +22,27 @@ function App() {
   const getWeather = (e) => {
     //既定のアクションを通常どおりに行うべきではないことを伝える
     e.preventDefault();
-    axios.get("https://api.weatherapi.com/v1/current.json?key=232a65be778b48a5915103113210705&q=London&aqi=no")
+    //テンプレートリテラルで組み込み式を扱うことができる。バッククオート(``)で囲む。
+    axios.get(`https://api.weatherapi.com/v1/current.json?key=232a65be778b48a5915103113210705&q=${city}&aqi=no`)
       //setResultsでresultsのstateを更新する
       .then(res => setResults({
         country: res.data.location.country,
-        cityName: res.data.location.cityName,
+        cityName: res.data.location.name,
         temperature: res.data.current.temp_c,
         conditionText: res.data.current.condition.text,
         icon: res.data.current.condition.icon
       }))
+    console.log({ results })
   }
   return (
-    <div className="test">
-      <Title />
-      <Form setCity={setCity} getWeather={getWeather} />
-      <Results results={results} />
-    </div>
+    <div className="wrapper">
+      <div className="container">
+        <Title />
+        <Form setCity={setCity} getWeather={getWeather} />
+        {/* データを渡す */}
+        <Results results={results} />
+      </div>
+    </div >
   );
 }
 
