@@ -2,7 +2,8 @@
 const Result = ({ results }) => {
     const { country, cityName, temperature, conditionText, icon } = results
     return (
-        <div>
+        //classNameが必要ない時はdivを省略できる
+        <>
             {/* 短絡評価の為、左辺がfalseの場合は右辺は実行されない */}
             { country && <div className="results-city">{country}</div>}
             { cityName && <div className="results-country">{cityName}</div>}
@@ -12,7 +13,7 @@ const Result = ({ results }) => {
                     <img src={icon} alt="icon"></img>
                     <span>{conditionText}</span>
                 </div>}
-        </div>
+        </>
     );
 }
 
