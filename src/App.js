@@ -1,11 +1,10 @@
-import Title from "./components/Title";
 import Form from "./components/Form"
-import Results from "./components/Results"
 import Loading from "./components/Loading"
 //useStateのインポート, ステートフックを使う為に必要
 import { useState } from "react"
 import axios from "axios";
 import './App.css';
+import Weather from "./components/Weather"
 
 function App() {
   // Declare a new state variable, which we'll call "city"
@@ -19,6 +18,8 @@ function App() {
     cityName: "",
     temperature: "",
     conditionText: "",
+    humidity: "",
+    localtime: "",
     icon: ""
   });
   const getWeather = (e) => {
@@ -34,7 +35,9 @@ function App() {
           cityName: res.data.location.name,
           temperature: res.data.current.temp_c,
           conditionText: res.data.current.condition.text,
-          icon: res.data.current.condition.icon
+          icon: res.data.current.condition.icon,
+          humidity: res.data.current.humidity,
+          localtime: res.data.location.localtime,
         })
         setCity("");
         setLoading(false);
@@ -44,10 +47,10 @@ function App() {
   return (
     <div className="wrapper">
       <div className="container">
-        <Title />
-        <Form setCity={setCity} city={city} getWeather={getWeather} />
-        {/* データを渡す */}
-        {loading ? <Loading /> : <Results results={results} />}
+        <div className="min-h-screen flex justify-center items-center">
+          <Form setCity={setCity} city={city} getWeather={getWeather} />
+          {loading ? <Loading /> : <Weather results={results} />}
+        </div>
       </div>
     </div >
   );
